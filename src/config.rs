@@ -15,8 +15,12 @@
 //! ```
 //!
 //! See [Configuration] for more information on the configuration options.
-
-pub(crate) use self::internal::*;
+/// https://doc.rust-lang.org/reference/visibility-and-privacy.html
+/// pub(in path) makes an item visible within the provided path. path must be an ancestor module of the item whose visibility is being declared.
+/// pub(crate) makes an item visible within the current crate.
+/// pub(super) makes an item visible to the parent module. This is equivalent to pub(in super).
+/// pub(self) makes an item visible to the current module. This is equivalent to pub(in self) or not using pub at all.
+pub(crate) use self::internal::*; ///在当前crate中可见
 use core::marker::PhantomData;
 
 /// The Configuration struct is used to build bincode configurations. The [Config] trait is implemented
@@ -168,7 +172,8 @@ impl<E, I, L> Configuration<E, I, L> {
         generate()
     }
 }
-
+/// Using Supertraits to Require One Trait’s Functionality Within Another Trait
+/// https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#using-supertraits-to-require-one-traits-functionality-within-another-trait
 /// Indicates a type is valid for controlling the bincode configuration
 pub trait Config:
     InternalEndianConfig + InternalIntEncodingConfig + InternalLimitConfig + Copy + Clone

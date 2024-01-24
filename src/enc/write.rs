@@ -11,6 +11,13 @@ pub trait Writer {
     /// Write `bytes` to the underlying writer. Exactly `bytes.len()` bytes must be written, or else an error should be returned.
     fn write(&mut self, bytes: &[u8]) -> Result<(), EncodeError>;
 }
+/// T必须实现Writrer
+/// 这是 Trait Bound Syntax https://doc.rust-lang.org/book/ch10-02-traits.html#trait-bound-syntax
+/// pub trait Summary {
+///   fn summarize(&self) -> String;
+/// }
+/// pub fn notify(item1: &impl Summary, item2: &impl Summary)
+/// pub fn notify<T: Summary>(item1: &T, item2: &T) 
 
 impl<T: Writer> Writer for &mut T {
     #[inline]
